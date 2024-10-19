@@ -1,22 +1,20 @@
 package com.eCommerce.model;
 
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
-	private Long id;
+	private Long idProduct;
 	
 	@Column
 	private String name;
@@ -30,24 +28,15 @@ public class Product {
 	@Column
 	private Double price;
 	
-	public Product() {
+	@ManyToOne
+	private Order order;
+
+	public Long getIdProduct() {
+		return idProduct;
 	}
 
-	public Product(Long id, String name, String category, Long quantityInStock, Double price) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.category = category;
-		this.quantityInStock = quantityInStock;
-		this.price = price;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdProduct(Long idProduct) {
+		this.idProduct = idProduct;
 	}
 
 	public String getName() {
@@ -81,32 +70,4 @@ public class Product {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", category=" + category + ", quantityInStock="
-				+ quantityInStock + ", price=" + price + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(category, id, name, price, quantityInStock);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Product other = (Product) obj;
-		return Objects.equals(category, other.category) && Objects.equals(id, other.id)
-				&& Objects.equals(name, other.name) && Objects.equals(price, other.price)
-				&& Objects.equals(quantityInStock, other.quantityInStock);
-	}
-	
-	
-
 }
